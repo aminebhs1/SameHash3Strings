@@ -162,19 +162,18 @@ int main()
     char choice{ 'a' };
     while (choice != 'x')
     {
-        switch (choice)
+        if (choice == 'g')
         {
-        case 'g':
             cout << "Processing...\n";
             collisionGenerator.generateAndPrint3StringCollisionMultithreaded();
             choice = 'a';
-            break;
-        default:
+        }
+        else
+        {
             cout << "Enter x to exit or g to generate a triplet of colliding strings\n";
             cin >> choice;
             if (choice == 'x')
                 cout << "Exiting...\n";
-            break;
         }
     }
     return 0;
