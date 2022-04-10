@@ -11,9 +11,10 @@
 #include <Windows.h>
 #include <limits>
 
-#undef max
-
 using namespace std;
+
+#undef max
+constexpr int maxChar = (int)(numeric_limits<unsigned char>::max());
 
 class CollisionGenerator {
 public:
@@ -54,9 +55,9 @@ private:
         srand(static_cast<unsigned int>(time(nullptr)) + GetCurrentThreadId());
         while (!collisionFound)
         {
-            string randomString = generateRandomString();
-            int hashOfRandomString = get4ByteHashCodeFromString(randomString);
-            bool isHashFound{ hashToStrings.find(hashOfRandomString) != hashToStrings.end() };
+            const string randomString = generateRandomString();
+            const int hashOfRandomString = get4ByteHashCodeFromString(randomString);
+            const bool isHashFound{ hashToStrings.find(hashOfRandomString) != hashToStrings.end() };
             vector<string>& hToStrings = hashToStrings[hashOfRandomString];
             if (isHashFound)
             {
@@ -91,17 +92,17 @@ private:
             }
         }
     }
-    string generateRandomString()
+    string generateRandomString() const
     {
         //const int stringLen = rand() % maxStringLen + 1;
         string randomString;
         for (int i{ 0 }; i < maxStringLen; ++i)
         {
-            randomString += (char)(rand() % (int)(numeric_limits<unsigned char>::max()));
+            randomString += (char)(rand() % maxChar);
         }
         return randomString;
     }
-    void printCollisionStrings(const vector<string>& collisionStrings)
+    void printCollisionStrings(const vector<string>& collisionStrings) const
     {
         if (checkAllStringsDifferAndCollide(collisionStrings))
         {
@@ -123,7 +124,7 @@ private:
         int narrowHash = static_cast<int>(stringHasher(stringToHash));
         return narrowHash;
     }
-    bool checkAllStringsDifferAndCollide(const vector<string>& collisionStrings)
+    bool checkAllStringsDifferAndCollide(const vector<string>& collisionStrings) const
     {
         if (collisionStrings.size() < 2)
         {
@@ -174,7 +175,7 @@ int main()
             if (choice == 'x')
                 cout << "Exiting...\n";
             break;
-        }  
+        }
     }
     return 0;
 }
